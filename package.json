@@ -14,6 +14,7 @@
   "files": [
     "dist/"
   ],
+  "license": "MIT",
   "scripts": {
     "setup": "yarn install && yarn allow-scripts",
     "test": "jest",
