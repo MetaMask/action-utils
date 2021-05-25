@@ -1,11 +1,22 @@
 import * as fileUtils from './file-utils';
 import {
   getPackageManifest,
+  getWorkspaceLocations,
   ManifestFieldNames,
   validateMonorepoPackageManifest,
   validatePackageManifestName,
   validatePackageManifestVersion,
+  validatePolyrepoPackageManifest,
 } from './package-utils';
+
+jest.mock('util', () => {
+  return {
+    promisify: jest.fn().mockImplementation(
+      // This is effectively the mock of the promisified glob main export
+      () => async (val: unknown, _options: Record<string, unknown>) => val,
+    ),
+  };
+});
 
 describe('getPackageManifest', () => {
   let readJsonFileMock: jest.SpyInstance;
@@ -135,5 +146,29 @@ describe('validateMonorepoPackageManifest', () => {
     expect(() => validateMonorepoPackageManifest(badManifest, path)).toThrow(
       /"private" .*"true"/u,
     );
+  });
+});
+
+describe('validatePolyrepoPackageManifest', () => {
+  it('passes through a manifest with valid fields', async () => {
+    const path = 'fooPath';
+    const manifest = {
+      [ManifestFieldNames.Name]: 'foo',
+      [ManifestFieldNames.Version]: '1.0.0',
+    };
+
+    expect(validatePolyrepoPackageManifest(manifest, path)).toStrictEqual({
+      ...manifest,
+    });
+  });
+});
+
+describe('getWorkspaceLocations', () => {
+  it('does the thing', async () => {
+    const workspaces = ['foo/bar', 'fizz/buzz'];
+    const rootDir = 'dir';
+    expect(await getWorkspaceLocations(workspaces, rootDir)).toStrictEqual([
+      ...workspaces,
+    ]);
   });
 });

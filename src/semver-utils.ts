@@ -8,7 +8,7 @@ export enum SemverReleaseTypes {
   Preminor = 'preminor',
   Patch = 'patch',
   Prepatch = 'prepatch',
-  Prerelease = 'prerelease'
+  Prerelease = 'prerelease',
 }
 
 /**

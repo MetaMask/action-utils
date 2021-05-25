@@ -1,13 +1,17 @@
 const TWO_SPACES = '  ';
 
 /**
- * Utility function to get the trimmed value of a particular key of process.env.
+ * Utility function to get the value of a key from an object known to only
+ * contain string values, such as process.env.
+ *
+ * Trims the value before returning it, and returns the empty string for any
+ * undefined values.
  *
  * @param key - The key of process.env to access.
  * @returns The trimmed string value of the process.env key. Returns an empty
  * string if the key is not set.
  */
-export function getObjectStringValue(
+export function getStringRecordValue(
   key: string,
   object: Partial<Record<string, string>>,
 ): string {

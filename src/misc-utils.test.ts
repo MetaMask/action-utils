@@ -1,4 +1,4 @@
-import { isTruthyString, tabs } from './misc-utils';
+import { getStringRecordValue, isTruthyString, tabs } from './misc-utils';
 
 describe('isTruthyString', () => {
   it('returns true for truthy strings', () => {
@@ -36,5 +36,17 @@ describe('tabs', () => {
   it('prepends a prefix to the entire string', () => {
     expect(tabs(1, 'foo')).toStrictEqual(`foo${TAB}`);
     expect(tabs(5, 'foo')).toStrictEqual(`foo${TAB}${TAB}${TAB}${TAB}${TAB}`);
+  });
+});
+
+describe('getStringRecordValue', () => {
+  it('gets a string value', () => {
+    expect(getStringRecordValue('foo', { foo: 'bar' })).toStrictEqual('bar');
+  });
+
+  it('returns the empty string for an undefined or null value', () => {
+    expect(getStringRecordValue('foo', {})).toStrictEqual('');
+    expect(getStringRecordValue('foo', { foo: undefined })).toStrictEqual('');
+    expect(getStringRecordValue('foo', { foo: null } as any)).toStrictEqual('');
   });
 });

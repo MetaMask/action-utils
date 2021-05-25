@@ -49,24 +49,6 @@ export interface MonorepoPackageManifest extends Partial<PackageManifest> {
 }
 
 /**
- * Get workspace directory locations, given the set of workspace patterns
- * specified in the `workspaces` field of the root `package.json` file.
- *
- * @param workspaces - The list of workspace patterns given in the root manifest.
- * @param rootDir - The monorepo root directory.
- * @returns The location of each workspace directory relative to the root directory
- */
-export async function getWorkspaceLocations(
-  workspaces: string[],
-  rootDir: string,
-): Promise<string[]> {
-  const resolvedWorkspaces = await Promise.all(
-    workspaces.map((pattern) => glob(pattern, { cwd: rootDir })),
-  );
-  return resolvedWorkspaces.flat();
-}
-
-/**
  * Read, parse, validate, and return the object corresponding to the
  * package.json file in the given directory.
  *
@@ -273,4 +255,22 @@ function getManifestErrorMessagePrefix(
       ? `"${manifest[ManifestFieldNames.Name]}" manifest "${invalidField}"`
       : `"${invalidField}" of manifest in "${manifestDirPath}"`
   }`;
+}
+
+/**
+ * Get workspace directory locations, given the set of workspace patterns
+ * specified in the `workspaces` field of the root `package.json` file.
+ *
+ * @param workspaces - The list of workspace patterns given in the root manifest.
+ * @param rootDir - The monorepo root directory.
+ * @returns The location of each workspace directory relative to the root directory
+ */
+export async function getWorkspaceLocations(
+  workspaces: string[],
+  rootDir: string,
+): Promise<string[]> {
+  const resolvedWorkspaces = await Promise.all(
+    workspaces.map((pattern) => glob(pattern, { cwd: rootDir })),
+  );
+  return resolvedWorkspaces.flat();
 }
