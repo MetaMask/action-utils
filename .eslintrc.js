@@ -7,6 +7,10 @@ module.exports = {
     {
       files: ['*.ts'],
       extends: ['@metamask/eslint-config-typescript'],
+      rules: {
+        'no-shadow': 'off',
+        '@typescript-eslint/no-shadow': ['error', { builtinGlobals: true }],
+      },
     },
 
     {
@@ -20,6 +24,9 @@ module.exports = {
     {
       files: ['*.test.ts', '*.test.js'],
       extends: ['@metamask/eslint-config-jest'],
+      rules: {
+        'import/unambiguous': 'off',
+      },
     },
   ],
 
