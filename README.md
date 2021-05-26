@@ -1,22 +1,41 @@
-# MetaMask Module Template
+# @metamask/action-utils
 
-This TypeScript module is maintained in the style of the MetaMask team.
+Utilities for MetaMask's GitHub Actions.
 
 ## Installation
 
-`yarn add @metamask/this-module`
+`yarn add @metamask/action-utils`
 
 or
 
-`npm install @metamask/this-module`
+`npm install @metamask/action-utils`
 
 ## Usage
 
-_Add examples here_
+For example:
 
-## API
+```typescript
+import {
+  getPackageManifest,
+  validatePackageManifestVersion,
+} from '@metamask/action-utils';
 
-_Add examples here_
+// Partial<PackageManifest>
+const rawManifest = await getPackageManifest('directory/package.json');
+
+// Partial<PackageManifest> & { version: string }
+// The version must be valid SemVer, or the function will throw.
+// The manifest is returned unmodified.
+const manifestWithVersion = await validatePackageManifestVersion(
+  rawManifest,
+  'directory',
+);
+```
+
+For more examples of how these utilities are used, see:
+
+- [MetaMask/action-publish-release](https://github.com/MetaMask/action-publish-release)
+- [MetaMask/action-create-release-pr](https://github.com/MetaMask/action-create-release-pr)
 
 ## Testing
 

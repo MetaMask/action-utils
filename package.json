@@ -1,6 +1,6 @@
 {
   "name": "@metamask/action-utils",
-  "version": "0.0.`",
+  "version": "0.0.1",
   "description": "Utilities for MetaMask's GitHub Actions.",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
