@@ -1,3 +1,4 @@
+import { glob } from 'glob';
 import * as fileUtils from './file-utils';
 import {
   getPackageManifest,
@@ -9,14 +10,7 @@ import {
   validatePolyrepoPackageManifest,
 } from './package-utils';
 
-jest.mock('util', () => {
-  return {
-    promisify: jest.fn().mockImplementation(
-      // This is effectively the mock of the promisified glob main export
-      () => async (val: unknown, _options: Record<string, unknown>) => val,
-    ),
-  };
-});
+jest.mock('glob');
 
 describe('getPackageManifest', () => {
   let readJsonFileMock: jest.SpyInstance;
@@ -164,11 +158,49 @@ describe('validatePolyrepoPackageManifest', () => {
 });
 
 describe('getWorkspaceLocations', () => {
+  const mockGlob = (value: string[]) => (
+    _pattern: string,
+    _options: unknown,
+    callback: (error: null, data: string[]) => void,
+  ) => callback(null, value);
+
   it('does the thing', async () => {
     const workspaces = ['foo/bar', 'fizz/buzz'];
     const rootDir = 'dir';
-    expect(await getWorkspaceLocations(workspaces, rootDir)).toStrictEqual([
-      ...workspaces,
-    ]);
+
+    (glob as jest.MockedFunction<any>)
+      .mockImplementationOnce(mockGlob(['foo/bar']))
+      .mockImplementationOnce(mockGlob(['fizz/buzz']));
+
+    expect(await getWorkspaceLocations(workspaces, rootDir)).toStrictEqual(
+      workspaces,
+    );
+  });
+
+  it('does the thing, but recursively', async () => {
+    (glob as jest.MockedFunction<any>)
+      .mockImplementationOnce(mockGlob(['foo/bar']))
+      .mockImplementationOnce(mockGlob(['baz']))
+      .mockImplementationOnce(mockGlob(['qux']));
+
+    jest
+      .spyOn(fileUtils, 'readJsonObjectFile')
+      .mockImplementationOnce(async () => ({
+        [ManifestFieldNames.Version]: '1.0.0',
+        [ManifestFieldNames.Private]: true,
+        [ManifestFieldNames.Workspaces]: ['baz'],
+      }))
+      .mockImplementationOnce(async () => ({
+        [ManifestFieldNames.Version]: '1.0.0',
+        [ManifestFieldNames.Private]: true,
+        [ManifestFieldNames.Workspaces]: ['qux'],
+      }))
+      .mockImplementation(async () => ({
+        [ManifestFieldNames.Version]: '1.0.0',
+      }));
+
+    expect(
+      await getWorkspaceLocations(['foo/bar'], 'dir', true),
+    ).toStrictEqual(['foo/bar', 'foo/bar/baz', 'foo/bar/baz/qux']);
   });
 });
