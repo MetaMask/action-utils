@@ -18,16 +18,25 @@ export enum ManifestDependencyFieldNames {
 }
 
 export enum ManifestFieldNames {
+  Engines = 'engines',
   Name = 'name',
   Private = 'private',
   Version = 'version',
   Workspaces = 'workspaces',
 }
 
+export enum EngineNames {
+  Node = 'node',
+  Npm = 'npm',
+  Pnpm = 'pnpm',
+  Yarn = 'yarn',
+}
+
 export interface PackageManifest
   extends Partial<
     Record<ManifestDependencyFieldNames, Record<string, string>>
   > {
+  readonly [ManifestFieldNames.Engines]?: { [k in EngineNames]?: string };
   readonly [ManifestFieldNames.Name]: string;
   readonly [ManifestFieldNames.Private]?: boolean;
   readonly [ManifestFieldNames.Version]: string;
@@ -38,13 +47,15 @@ export interface PolyrepoPackageManifest
   extends Partial<
     Record<ManifestDependencyFieldNames, Record<string, string>>
   > {
+  readonly [ManifestFieldNames.Engines]?: { [k in EngineNames]?: string };
   readonly [ManifestFieldNames.Name]: string;
   readonly [ManifestFieldNames.Version]: string;
 }
 
 export interface MonorepoPackageManifest extends Partial<PackageManifest> {
-  readonly [ManifestFieldNames.Version]: string;
+  readonly [ManifestFieldNames.Engines]?: { [k in EngineNames]?: string };
   readonly [ManifestFieldNames.Private]: boolean;
+  readonly [ManifestFieldNames.Version]: string;
   readonly [ManifestFieldNames.Workspaces]: string[];
 }
 
