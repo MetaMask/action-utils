@@ -36,7 +36,7 @@ export interface PackageManifest
   extends Partial<
     Record<ManifestDependencyFieldNames, Record<string, string>>
   > {
-  readonly [ManifestFieldNames.Engines]?: { [k in EngineNames]?: string };
+  readonly [ManifestFieldNames.Engines]?: { [name in EngineNames]?: string };
   readonly [ManifestFieldNames.Name]: string;
   readonly [ManifestFieldNames.Private]?: boolean;
   readonly [ManifestFieldNames.Version]: string;
@@ -47,13 +47,13 @@ export interface PolyrepoPackageManifest
   extends Partial<
     Record<ManifestDependencyFieldNames, Record<string, string>>
   > {
-  readonly [ManifestFieldNames.Engines]?: { [k in EngineNames]?: string };
+  readonly [ManifestFieldNames.Engines]?: { [name in EngineNames]?: string };
   readonly [ManifestFieldNames.Name]: string;
   readonly [ManifestFieldNames.Version]: string;
 }
 
 export interface MonorepoPackageManifest extends Partial<PackageManifest> {
-  readonly [ManifestFieldNames.Engines]?: { [k in EngineNames]?: string };
+  readonly [ManifestFieldNames.Engines]?: { [name in EngineNames]?: string };
   readonly [ManifestFieldNames.Private]: boolean;
   readonly [ManifestFieldNames.Version]: string;
   readonly [ManifestFieldNames.Workspaces]: string[];
