@@ -32,7 +32,7 @@ describe('readJsonObjectFile', () => {
       .mockImplementationOnce(async () => mockJsonString);
 
     await expect(readJsonObjectFile(path)).rejects.toThrow(
-      /^Unexpected token/u,
+      /^Unexpected token|^Expected property name/u,
     );
   });
 
