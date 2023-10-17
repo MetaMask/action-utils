@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "^16.20 || ^18.16 || >=20"
+    "node": "^16.20 || ^18.16"
   },
   "files": [
     "dist/"
