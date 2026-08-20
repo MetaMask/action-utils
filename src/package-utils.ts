@@ -1,3 +1,4 @@
+import { access } from 'fs/promises';
 import _glob from 'glob';
 import pathUtils from 'path';
 import { promisify } from 'util';
@@ -289,7 +290,19 @@ export async function getWorkspaceLocations(
         pathUtils.join(prefix, match),
       );
 
-      return [...array, ...matches];
+      const validMatches = (
+        await Promise.all(
+          matches.map(async (match) => {
+            const packageJson = pathUtils.join(match, PACKAGE_JSON);
+            const exists = await access(packageJson)
+              .then(() => true)
+              .catch(() => false);
+            return exists ? match : null;
+          }),
+        )
+      ).filter((match): match is string => match !== null);
+
+      return [...array, ...validMatches];
     },
     Promise.resolve([]),
   );
