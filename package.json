@@ -2,23 +2,19 @@
   "name": "@metamask/action-utils",
   "version": "1.1.0",
   "description": "Utilities for MetaMask's GitHub Actions.",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": "^16.20 || ^18.16 || >=20",
-    "yarn": "^1.22.22"
-  },
-  "files": [
-    "dist/"
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/action-utils.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "setup": "yarn install && yarn allow-scripts",
@@ -26,9 +22,10 @@
     "test:watch": "jest --watch",
     "prepublishOnly": "yarn build:clean && yarn lint && yarn test",
     "lint:eslint": "eslint . --cache --ext js,ts",
-    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
-    "lint": "yarn lint:eslint && yarn lint:misc --check",
-    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
+    "lint:misc": "oxfmt --ignore-path .gitignore",
+    "lint:changelog": "auto-changelog validate --formatter oxfmt",
+    "lint": "yarn lint:eslint && yarn lint:misc --check && yarn lint:changelog",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write && yarn lint:changelog --fix",
     "build:clean": "rimraf dist && yarn build",
     "build": "tsc --project ."
   },
@@ -38,7 +35,8 @@
     "semver": "^7.3.5"
   },
   "devDependencies": {
-    "@lavamoat/allow-scripts": "^1.0.5",
+    "@lavamoat/allow-scripts": "^5.1.0",
+    "@metamask/auto-changelog": "^6.2.1",
     "@metamask/eslint-config": "^7.0.1",
     "@metamask/eslint-config-jest": "^7.0.0",
     "@metamask/eslint-config-nodejs": "^7.0.1",
@@ -54,15 +52,18 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.4.2",
-    "prettier": "^2.2.1",
+    "oxfmt": "^0.45.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.3.0",
     "typescript": "^4.2.4"
   },
+  "engines": {
+    "node": "^22 || ^24 || >=26"
+  },
+  "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1",
   "lavamoat": {
     "allowScripts": {
       "@lavamoat/preinstall-always-fail": false
     }
-  },
-  "packageManager": "yarn@1.22.22"
+  }
 }
