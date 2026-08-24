@@ -1,4 +1,5 @@
 import { glob } from 'glob';
+
 import * as fileUtils from './file-utils';
 import {
   getPackageManifest,
@@ -158,11 +159,14 @@ describe('validatePolyrepoPackageManifest', () => {
 });
 
 describe('getWorkspaceLocations', () => {
-  const mockGlob = (value: string[]) => (
-    _pattern: string,
-    _options: unknown,
-    callback: (error: null, data: string[]) => void,
-  ) => callback(null, value);
+  const mockGlob =
+    (value: string[]) =>
+    (
+      _pattern: string,
+      _options: unknown,
+      callback: (error: null, data: string[]) => void,
+    ) =>
+      callback(null, value);
 
   it('does the thing', async () => {
     const workspaces = ['foo/bar', 'fizz/buzz'];
@@ -199,8 +203,8 @@ describe('getWorkspaceLocations', () => {
         [ManifestFieldNames.Version]: '1.0.0',
       }));
 
-    expect(
-      await getWorkspaceLocations(['foo/bar'], 'dir', true),
-    ).toStrictEqual(['foo/bar', 'foo/bar/baz', 'foo/bar/baz/qux']);
+    expect(await getWorkspaceLocations(['foo/bar'], 'dir', true)).toStrictEqual(
+      ['foo/bar', 'foo/bar/baz', 'foo/bar/baz/qux'],
+    );
   });
 });

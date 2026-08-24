@@ -2,22 +2,19 @@
   "name": "@metamask/action-utils",
   "version": "1.1.0",
   "description": "Utilities for MetaMask's GitHub Actions.",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "engines": {
-    "node": "^22 || ^24 || >=26"
-  },
-  "files": [
-    "dist/"
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/action-utils.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "setup": "yarn install && yarn allow-scripts",
@@ -25,8 +22,8 @@
     "test:watch": "jest --watch",
     "prepublishOnly": "yarn build:clean && yarn lint && yarn test",
     "lint:eslint": "eslint . --cache --ext js,ts",
-    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' --ignore-path .gitignore",
-    "lint:changelog": "auto-changelog validate --formatter prettier",
+    "lint:misc": "oxfmt --ignore-path .gitignore",
+    "lint:changelog": "auto-changelog validate --formatter oxfmt",
     "lint": "yarn lint:eslint && yarn lint:misc --check && yarn lint:changelog",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write && yarn lint:changelog --fix",
     "build:clean": "rimraf dist && yarn build",
@@ -55,16 +52,19 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.4.2",
-    "prettier": "^3.9.6",
-    "prettier-2": "npm:prettier@^2.8.8",
+    "oxfmt": "^0.45.0",
+    "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.3.0",
     "typescript": "^4.2.4"
   },
+  "engines": {
+    "node": "^22 || ^24 || >=26"
+  },
+  "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1",
   "lavamoat": {
     "allowScripts": {
       "@lavamoat/preinstall-always-fail": false
     }
-  },
-  "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1"
+  }
 }

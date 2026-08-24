@@ -1,8 +1,9 @@
+import _glob from 'glob';
 import pathUtils from 'path';
 import { promisify } from 'util';
-import _glob from 'glob';
-import { isTruthyString } from './misc-utils';
+
 import { readJsonObjectFile } from './file-utils';
+import { isTruthyString } from './misc-utils';
 import { isValidSemver } from './semver-utils';
 
 const glob = promisify(_glob);
@@ -32,10 +33,9 @@ export enum EngineNames {
   Yarn = 'yarn',
 }
 
-export interface PackageManifest
-  extends Partial<
-    Record<ManifestDependencyFieldNames, Record<string, string>>
-  > {
+export interface PackageManifest extends Partial<
+  Record<ManifestDependencyFieldNames, Record<string, string>>
+> {
   readonly [ManifestFieldNames.Engines]?: { [name in EngineNames]?: string };
   readonly [ManifestFieldNames.Name]: string;
   readonly [ManifestFieldNames.Private]?: boolean;
@@ -43,10 +43,9 @@ export interface PackageManifest
   readonly [ManifestFieldNames.Workspaces]?: string[];
 }
 
-export interface PolyrepoPackageManifest
-  extends Partial<
-    Record<ManifestDependencyFieldNames, Record<string, string>>
-  > {
+export interface PolyrepoPackageManifest extends Partial<
+  Record<ManifestDependencyFieldNames, Record<string, string>>
+> {
   readonly [ManifestFieldNames.Engines]?: { [name in EngineNames]?: string };
   readonly [ManifestFieldNames.Name]: string;
   readonly [ManifestFieldNames.Version]: string;
@@ -143,7 +142,7 @@ function hasValidWorkspacesField(
  * @returns The unmodified manifest, with the "version" field typed correctly.
  */
 export function validatePackageManifestVersion<
-  ManifestType extends Partial<PackageManifest>
+  ManifestType extends Partial<PackageManifest>,
 >(
   manifest: ManifestType,
   manifestDirPath: string,
@@ -172,7 +171,7 @@ export function validatePackageManifestVersion<
  * @returns The unmodified manifest, with the "name" field typed correctly.
  */
 export function validatePackageManifestName<
-  ManifestType extends Partial<PackageManifest>
+  ManifestType extends Partial<PackageManifest>,
 >(
   manifest: ManifestType,
   manifestDirPath: string,
@@ -219,7 +218,7 @@ export function validatePolyrepoPackageManifest(
  */
 export function validateMonorepoPackageManifest<
   ManifestType extends Pick<PackageManifest, ManifestFieldNames.Version> &
-    Partial<PackageManifest>
+    Partial<PackageManifest>,
 >(manifest: ManifestType, manifestDirPath: string): MonorepoPackageManifest {
   if (!hasValidWorkspacesField(manifest)) {
     throw new Error(

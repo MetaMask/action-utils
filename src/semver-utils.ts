@@ -1,5 +1,5 @@
-import semverParse from 'semver/functions/parse';
 import type { ReleaseType as SemverReleaseType } from 'semver';
+import semverParse from 'semver/functions/parse';
 
 export enum SemverReleaseTypes {
   Major = 'major',

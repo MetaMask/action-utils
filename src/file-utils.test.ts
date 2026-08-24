@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import { readJsonObjectFile, writeJsonFile } from './file-utils';
 
 jest.mock('fs', () => ({
