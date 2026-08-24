@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **BREAKING:** Bump minimum Node.js version to `22.x` ([#42](https://github.com/MetaMask/action-utils/pull/42))
+
 ## [1.1.0]
 ### Changed
 - Add recognition of `engines` field in package manifest ([#18](https://github.com/MetaMask/action-utils/pull/18))
