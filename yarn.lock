@@ -790,6 +790,7 @@ __metadata:
     glob: "npm:^7.1.7"
     jest: "npm:^26.4.2"
     prettier: "npm:^3.9.6"
+    prettier-2: "npm:prettier@^2.8.8"
     rimraf: "npm:^3.0.2"
     semver: "npm:^7.3.5"
     ts-jest: "npm:^26.3.0"
@@ -5625,6 +5626,15 @@ __metadata:
   version: 1.1.2
   resolution: "prelude-ls@npm:1.1.2"
   checksum: 10/946a9f60d3477ca6b7d4c5e8e452ad1b98dc8aaa992cea939a6b926ac16cc4129d7217c79271dc808b5814b1537ad0af37f29a942e2eafbb92cfc5a1c87c38cb
+  languageName: node
+  linkType: hard
+
+"prettier-2@npm:prettier@^2.8.8":
+  version: 2.8.8
+  resolution: "prettier@npm:2.8.8"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 10/00cdb6ab0281f98306cd1847425c24cbaaa48a5ff03633945ab4c701901b8e96ad558eb0777364ffc312f437af9b5a07d0f45346266e8245beaf6247b9c62b24
   languageName: node
   linkType: hard
 
