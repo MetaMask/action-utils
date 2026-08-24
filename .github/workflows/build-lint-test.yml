@@ -1,9 +1,10 @@
 name: Build, Lint, and Test
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
   build-lint-test:
