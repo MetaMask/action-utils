@@ -307,7 +307,7 @@ export async function getWorkspaceLocations(
       const validMatches = (
         await Promise.all(
           matches.map(async (match) => {
-            const packageJson = pathUtils.join(match, PACKAGE_JSON);
+            const packageJson = pathUtils.join(rootDir, match, PACKAGE_JSON);
             const exists = await fileExists(packageJson);
             return exists ? match : null;
           }),
