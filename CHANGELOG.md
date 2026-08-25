@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- fix: Filter out workspaces that do not contain a `package.json` ([#41](https://github.com/MetaMask/action-utils/pull/41))
+- Filter out workspaces that do not contain a `package.json` ([#41](https://github.com/MetaMask/action-utils/pull/41))
 
 ## [1.1.0]
 
