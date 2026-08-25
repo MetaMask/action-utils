@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0]
+
 ### Changed
 
-- **BREAKING:** Bump minimum Node.js version to `22.x` ([#42](https://github.com/MetaMask/action-utils/pull/42))
+- **BREAKING:** Bump minimum Node.js version to `22.x` ([#28](https://github.com/MetaMask/action-utils/pull/28), [#42](https://github.com/MetaMask/action-utils/pull/42))
+
+### Fixed
+
+- Filter out workspaces that do not contain a `package.json` ([#41](https://github.com/MetaMask/action-utils/pull/41))
 
 ## [1.1.0]
 
@@ -37,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release
 
-[Unreleased]: https://github.com/MetaMask/action-utils/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/MetaMask/action-utils/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/MetaMask/action-utils/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/MetaMask/action-utils/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/MetaMask/action-utils/compare/v0.0.2...v1.0.0
 [0.0.2]: https://github.com/MetaMask/action-utils/compare/v0.0.1...v0.0.2
