@@ -9,18 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0]
 
-### Uncategorized
-
-- chore: add workflow_dispatch to security-code-scanner ([#38](https://github.com/MetaMask/action-utils/pull/38))
-- Update CODEOWNERS ([#36](https://github.com/MetaMask/action-utils/pull/36))
-- chore: declare yarn version 1.22.22 in package.json ([#35](https://github.com/MetaMask/action-utils/pull/35))
-- Enabling MetaMask security code scanner ([#30](https://github.com/MetaMask/action-utils/pull/30))
-- Add Shared Libraries team in codeowners file ([#29](https://github.com/MetaMask/action-utils/pull/29))
-- Set minimum Node.js version to 16 ([#28](https://github.com/MetaMask/action-utils/pull/28))
-
 ### Changed
 
-- **BREAKING:** Bump minimum Node.js version to `22.x` ([#42](https://github.com/MetaMask/action-utils/pull/42))
+- **BREAKING:** Bump minimum Node.js version to `22.x` ([#28](https://github.com/MetaMask/action-utils/pull/28), [#42](https://github.com/MetaMask/action-utils/pull/42))
 
 ### Fixed
 
