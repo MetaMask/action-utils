@@ -1,3 +1,4 @@
+import { access } from 'fs/promises';
 import { glob } from 'glob';
 
 import * as fileUtils from './file-utils';
@@ -12,6 +13,7 @@ import {
 } from './package-utils';
 
 jest.mock('glob');
+jest.mock('fs/promises');
 
 describe('getPackageManifest', () => {
   let readJsonFileMock: jest.SpyInstance;
@@ -176,6 +178,8 @@ describe('getWorkspaceLocations', () => {
       .mockImplementationOnce(mockGlob(['foo/bar']))
       .mockImplementationOnce(mockGlob(['fizz/buzz']));
 
+    (access as jest.MockedFunction<typeof access>).mockResolvedValue();
+
     expect(await getWorkspaceLocations(workspaces, rootDir)).toStrictEqual(
       workspaces,
     );
@@ -186,6 +190,8 @@ describe('getWorkspaceLocations', () => {
       .mockImplementationOnce(mockGlob(['foo/bar']))
       .mockImplementationOnce(mockGlob(['baz']))
       .mockImplementationOnce(mockGlob(['qux']));
+
+    (access as jest.MockedFunction<typeof access>).mockResolvedValue();
 
     jest
       .spyOn(fileUtils, 'readJsonObjectFile')
@@ -206,5 +212,19 @@ describe('getWorkspaceLocations', () => {
     expect(await getWorkspaceLocations(['foo/bar'], 'dir', true)).toStrictEqual(
       ['foo/bar', 'foo/bar/baz', 'foo/bar/baz/qux'],
     );
+  });
+
+  it('filters out workspaces without a package.json', async () => {
+    (glob as jest.MockedFunction<any>)
+      .mockImplementationOnce(mockGlob(['foo/bar']))
+      .mockImplementationOnce(mockGlob(['fizz/buzz']));
+
+    (access as jest.MockedFunction<typeof access>)
+      .mockResolvedValueOnce()
+      .mockRejectedValueOnce(new Error('ENOENT'));
+
+    expect(
+      await getWorkspaceLocations(['foo/bar', 'fizz/buzz'], 'dir'),
+    ).toStrictEqual(['foo/bar']);
   });
 });

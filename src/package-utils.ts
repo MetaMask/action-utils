@@ -1,3 +1,4 @@
+import { access } from 'fs/promises';
 import _glob from 'glob';
 import pathUtils from 'path';
 import { promisify } from 'util';
@@ -268,6 +269,20 @@ function getManifestErrorMessagePrefix(
 }
 
 /**
+ * Check whether a given file exists at a path
+ * @param path - The file path.
+ * @returns True if the file exists, otherwise false.
+ */
+async function fileExists(path: string): Promise<boolean> {
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Get workspace directory locations, given the set of workspace patterns
  * specified in the `workspaces` field of the root `package.json` file.
  *
@@ -289,7 +304,17 @@ export async function getWorkspaceLocations(
         pathUtils.join(prefix, match),
       );
 
-      return [...array, ...matches];
+      const validMatches = (
+        await Promise.all(
+          matches.map(async (match) => {
+            const packageJson = pathUtils.join(match, PACKAGE_JSON);
+            const exists = await fileExists(packageJson);
+            return exists ? match : null;
+          }),
+        )
+      ).filter((match): match is string => match !== null);
+
+      return [...array, ...validMatches];
     },
     Promise.resolve([]),
   );
